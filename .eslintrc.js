@@ -74,6 +74,7 @@ module.exports = {
     'react/require-default-props': 0,
     'react/require-extension': 0,
     'react/self-closing-comp': 0,
+    'react/no-unused-prop-types': 1,
     'react/sort-comp': 0,
     'redux-saga/no-yield-in-race': 2,
     'redux-saga/yield-effects': 2,

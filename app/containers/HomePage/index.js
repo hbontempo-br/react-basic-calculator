@@ -6,13 +6,24 @@
  */
 
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+import Calculator from 'components/Calculator/Loadable';
+import { makeStyles } from '@material-ui/styles';
 
-export default function HomePage() {
+const useStyles = makeStyles(() => ({
+  root: {
+    width: '100vw',
+    height: '100vh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+}));
+
+export default function HomePage(props) {
+  const classes = useStyles(props);
   return (
-    <h1>
-      <FormattedMessage {...messages.header} />
-    </h1>
+    <div className={classes.root}>
+      <Calculator />
+    </div>
   );
 }
