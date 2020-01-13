@@ -56,7 +56,11 @@ export default function Calculator(props) {
     operator: '',
   });
 
-  function handleChange(value) {
+  function handleChange(originalValue) {
+    let value = originalValue;
+    if (originalValue === 'Enter') {
+      value = '=';
+    }
     if (value.match(/^[0-9]*$/g)) {
       handleNumeric(value);
       return;
@@ -123,6 +127,11 @@ export default function Calculator(props) {
     setCurrentValue('0');
   }
 
+  function handleKeyPress(event) {
+    console.log(`Executing handleKeyPress: ${event.key}`);
+    handleChange(event.key);
+  }
+
   return (
     <div className={classes.root}>
       <div className={classes.history}>
@@ -135,8 +144,8 @@ export default function Calculator(props) {
         classes={{
           input: classes.inputClass,
         }}
+        onKeyDown={handleKeyPress}
         value={currentValue}
-        disabled //  TODO: Enable Input and the calculator must still work
       />
       <div className={classes.buttonsContainer}>
         <div className={classes.buttonRow}>
