@@ -9,6 +9,7 @@ const useStyles = makeStyles(theme => ({
     width: '350px',
     borderRadius: '5px',
     padding: theme.spacing(2),
+    outline: 0,
   },
   history: {
     width: '100%',
@@ -57,9 +58,16 @@ export default function Calculator(props) {
   });
 
   function handleChange(originalValue) {
-    let value = originalValue;
-    if (originalValue === 'Enter') {
-      value = '=';
+    let value;
+    switch (originalValue) {
+      case 'Enter':
+        value = '=';
+        break;
+      case 'Backspace':
+        value = 'del';
+        break;
+      default:
+        value = originalValue;
     }
     if (value.match(/^[0-9]*$/g)) {
       handleNumeric(value);
@@ -128,12 +136,16 @@ export default function Calculator(props) {
   }
 
   function handleKeyPress(event) {
-    console.log(`Executing handleKeyPress: ${event.key}`);
     handleChange(event.key);
   }
 
   return (
-    <div className={classes.root}>
+    <div
+      className={classes.root}
+      role="button"
+      tabIndex="0"
+      onKeyDown={handleKeyPress}
+    >
       <div className={classes.history}>
         {mem.value}&nbsp;{mem.operator}
       </div>
@@ -144,7 +156,7 @@ export default function Calculator(props) {
         classes={{
           input: classes.inputClass,
         }}
-        onKeyDown={handleKeyPress}
+        autoFocus
         value={currentValue}
       />
       <div className={classes.buttonsContainer}>
